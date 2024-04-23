@@ -1,0 +1,23 @@
+---
+- name: Install and configure Apache HTTP server on EC2 instances
+  hosts: ec2_instances
+  become: true
+  tasks:
+    - name: Install Apache HTTP server
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start Apache service
+      service:
+        name: httpd
+        state: started
+
+    - name: Enable Apache service on boot
+      service:
+        name: httpd
+        enabled: true
+    - name: Create index.html file
+      copy:
+        content: "<html><body><h1>Hello, Yash</html>"
+        dest: /var/www/html/index.html
